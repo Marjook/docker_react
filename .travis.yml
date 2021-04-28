@@ -9,3 +9,7 @@ before_install:
 
 #script:
   #- docker run -e CI=true marjook/docker_react npm run test
+after_success:
+  - docker build -t marjook/testdockerhub ./Reactapp_prod
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push marjook/testdockerhub
